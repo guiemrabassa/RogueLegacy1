@@ -6,3 +6,12 @@ obj_core/
 *.userprefs
 *.suo
 *.vs
+
+*.bmp
+*.ico
+*.png
+
+RogueCastle/Content/*
+
+.DS_Store
+
