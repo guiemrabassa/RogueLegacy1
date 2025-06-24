@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using SteamWorksWrapper;
-using SDL3;
 
 namespace RogueCastle
 {
@@ -24,8 +23,6 @@ namespace RogueCastle
         static void Main(string[] args)
 #endif
         {
-            Environment.SetEnvironmentVariable("FNA_PLATFORM_BACKEND", "SDL3");
-
             bool loadGame = true;
 
             if (LevelEV.CREATE_RETAIL_VERSION == true)// && LevelEV.CREATE_INSTALLABLE == false)
