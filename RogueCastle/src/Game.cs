@@ -368,9 +368,19 @@ namespace RogueCastle
 
         private void InitializeDefaultConfig()
         {
-            GameConfig.FullScreen = false;
-            GameConfig.ScreenWidth = 1360;
-            GameConfig.ScreenHeight = 768;
+            if (Platform.IsMobile)
+            {
+                GameConfig.FullScreen = true;
+                GameConfig.ScreenWidth = GraphicsDevice.Viewport.Width;
+                GameConfig.ScreenHeight = GraphicsDevice.Viewport.Height;
+            }
+            else
+            {
+                GameConfig.FullScreen = false;
+                GameConfig.ScreenWidth = 1360;
+                GameConfig.ScreenHeight = 768;
+            }
+
             GameConfig.MusicVolume = 1;
             GameConfig.SFXVolume = 0.8f;
             GameConfig.EnableDirectInput = true;
