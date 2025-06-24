@@ -1,0 +1,30 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+			"label": "Debug Android Build",
+			"type": "shell",
+			"command": "dotnet build -p:Configuration=Debug ${workspaceFolder}/RogueCastle.Android/RogueCastle.Android.csproj \"/t:Install;_Run\" /p:AndroidAttachDebugger=true /p:AndroidSdbHostPort=10000"
+		},
+		{
+			"label": "Release Android Build",
+			"type": "shell",
+			"command": "dotnet build -p:Configuration=Release ${workspaceFolder}/RogueCastle.Android/RogueCastle.Android.csproj"
+		},
+		{
+			"label": "Debug DesktopGL Build",
+			"type": "shell",
+			"command": "dotnet build -p:Configuration=Debug ${workspaceFolder}/RogueCastle.DesktopGL/RogueCastle.DesktopGL.csproj"
+		},
+        {
+			"label": "Debug iOS Build",
+			"type": "shell",
+			"command": "dotnet build -p:Configuration=Debug ${workspaceFolder}/RogueCastle.iOS/RogueCastle.iOS.csproj"
+		},
+        {
+			"label": "Debug WindowsDX Build",
+			"type": "shell",
+			"command": "dotnet build -p:Configuration=Debug ${workspaceFolder}/RogueCastle.WindowsDX/RogueCastle.WindowsDX.csproj"
+		},
+	]
+}

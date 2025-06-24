@@ -27,6 +27,22 @@
             "request": "attach",
             "address": "localhost",
             "port": 55555
-        }
+        },
+        {
+            "name": "Android Debug",
+            "type": "mono",
+            "request": "attach",
+            "address": "localhost",
+            "port": 10000,
+			"preLaunchTask": "Debug Android Build",
+        },
+        {
+            "name": "Android Release",
+            "type": "mono",
+            "request": "attach",
+            "address": "localhost",
+            "port": 10000,
+			"preLaunchTask": "Release Android Build",
+        },
     ]
 }
