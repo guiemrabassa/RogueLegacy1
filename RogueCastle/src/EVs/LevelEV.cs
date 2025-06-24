@@ -123,5 +123,36 @@ namespace RogueCastle
         public static bool SHOW_FPS = false; // Setting this true also turns vsync off (so that you can get an FPS greater than 60).
         public static bool SAVE_FRAMES = false;
         public static int SAVEFILE_REVISION_NUMBER = 1;
+
+        public static void LoadRetail()
+        {
+            if (CREATE_RETAIL_VERSION == true)
+                {
+                    SHOW_ENEMY_RADII = false;
+                    ENABLE_DEBUG_INPUT = false;
+                    UNLOCK_ALL_ABILITIES = false;
+                    TESTROOM_LEVELTYPE = GameTypes.LevelType.CASTLE;
+                    TESTROOM_REVERSE = false;
+                    RUN_TESTROOM = false;
+                    SHOW_DEBUG_TEXT = false;
+                    LOAD_TITLE_SCREEN = false;
+                    LOAD_SPLASH_SCREEN = true;
+                    SHOW_SAVELOAD_DEBUG_TEXT = false;
+                    DELETE_SAVEFILE = false;
+                    CLOSE_TESTROOM_DOORS = false;
+                    RUN_TUTORIAL = false;
+                    RUN_DEMO_VERSION = false;
+                    DISABLE_SAVING = false;
+                    RUN_CRASH_LOGS = true;
+                    WEAKEN_BOSSES = false;
+                    ENABLE_BACKUP_SAVING = true;
+                    ENABLE_OFFSCREEN_CONTROL = false;
+                    SHOW_FPS = false;
+                    SAVE_FRAMES = false;
+                    UNLOCK_ALL_DIARY_ENTRIES = false;
+                    ENABLE_BLITWORKS_SPLASH = false;
+                }
+        }
+
     }
 }
