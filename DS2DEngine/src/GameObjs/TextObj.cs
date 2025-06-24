@@ -71,7 +71,7 @@ namespace DS2DEngine
                 {
                     m_fontIndex = SpriteFontArray.SpriteFontList.IndexOf(value);
                     if (m_fontIndex == -1) throw new Exception("Cannot find font in SpriteFontArray");
-                    FieldInfo fieldInfo = value.GetType().GetField("textureValue", BindingFlags.NonPublic | BindingFlags.Instance);
+                    FieldInfo fieldInfo = value.GetType().GetField("_texture", BindingFlags.NonPublic | BindingFlags.Instance);
                     m_textureValue = (Texture2D)fieldInfo.GetValue(value);
                 }
                 m_defaultFont = value;
@@ -177,7 +177,7 @@ namespace DS2DEngine
             {
                 m_fontIndex = SpriteFontArray.SpriteFontList.IndexOf(font);
                 if (m_fontIndex == -1) throw new Exception("Cannot find font in SpriteFontArray");
-                FieldInfo fieldInfo = font.GetType().GetField("textureValue", BindingFlags.NonPublic | BindingFlags.Instance);
+                FieldInfo fieldInfo = font.GetType().GetField("_texture", BindingFlags.NonPublic | BindingFlags.Instance);
                 m_textureValue = (Texture2D)fieldInfo.GetValue(font);
             }
         }
