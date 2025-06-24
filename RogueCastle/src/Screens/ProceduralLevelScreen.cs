@@ -2083,8 +2083,10 @@ namespace RogueCastle
             Camera.GraphicsDevice.Clear(Color.Black);
             if (m_enemiesPaused == true)
                 Camera.GraphicsDevice.Clear(Color.White);
-            Camera.GraphicsDevice.Textures[1] = m_skyRenderTarget;
-            Camera.GraphicsDevice.Textures[1].GraphicsDevice.SamplerStates[1] = SamplerState.LinearClamp;
+
+            Game.ParallaxEffect.Parameters["RenderSampler"].SetValue(m_bgRenderTarget);
+            Game.ParallaxEffect.Parameters["ParallaxBGSampler"].SetValue(m_skyRenderTarget);
+            
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, null, null, Game.ParallaxEffect); // Parallax Effect has been disabled in favour of ripple effect for now.
             if (m_enemiesPaused == false)
                 Camera.Draw(m_bgRenderTarget, Vector2.Zero, Color.White);
@@ -2093,8 +2095,8 @@ namespace RogueCastle
 
             //////// DRAWING FOREGROUND///////////
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, RasterizerState.CullNone, Game.BWMaskEffect, Camera.GetTransformation());
-            Camera.GraphicsDevice.Textures[1] = m_fgRenderTarget;
-            Camera.GraphicsDevice.Textures[1].GraphicsDevice.SamplerStates[1] = SamplerState.PointClamp;
+            Game.BWMaskEffect.Parameters["FgTexture"].SetValue(m_fgRenderTarget);
+            Game.BWMaskEffect.Parameters["MaskTexture"].SetValue(CurrentRoom.BGRender);
             Camera.Draw(CurrentRoom.BGRender, Camera.TopLeftCorner, Color.White);
             Camera.End();
             ///////////////////////////////////////////
@@ -2197,7 +2199,7 @@ namespace RogueCastle
             Camera.End();
 
             /////////// DRAWING THE SHADOWS & LIGHTING //////////////////////////////
-            if ((CurrentLevelType == GameTypes.LevelType.DUNGEON || Game.PlayerStats.Traits.X == TraitType.Glaucoma || Game.PlayerStats.Traits.Y == TraitType.Glaucoma) 
+            if ((CurrentLevelType == GameTypes.LevelType.DUNGEON || Game.PlayerStats.Traits.X == TraitType.Glaucoma || Game.PlayerStats.Traits.Y == TraitType.Glaucoma)
                 && (Game.PlayerStats.Class != ClassType.Banker2 || (Game.PlayerStats.Class == ClassType.Banker2 && Player.LightOn == false)))
             {
                 // Can't do this because switching from a rendertarget and back is a bug in XNA that causes a purple screen.  Might work with Monogame.
