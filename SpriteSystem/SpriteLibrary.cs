@@ -96,7 +96,7 @@ namespace SpriteSystem
             }
 
             string xmlPath = fullSpritePath.Substring(0, fullSpritePath.Length - 4) + ".xml";
-            XmlReader reader = XmlReader.Create(xmlPath, settings);
+            XmlReader reader = XmlReader.Create(TitleContainer.OpenStream(@xmlPath), settings);
 
             return ParseData(reader, newTexture2D, returnCharDataNames, fullSpritePath);
         }
@@ -460,7 +460,7 @@ namespace SpriteSystem
             settings.IgnoreComments = true;
             settings.IgnoreWhitespace = true;
             string xmlPath = filePath.Substring(0, filePath.Length - 4) + ".xml";
-            XmlReader reader = XmlReader.Create(xmlPath, settings);
+            XmlReader reader = XmlReader.Create(TitleContainer.OpenStream(@xmlPath), settings);
             while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element)
@@ -490,7 +490,7 @@ namespace SpriteSystem
             settings.IgnoreComments = true;
             settings.IgnoreWhitespace = true;
             string xmlPath = filePath.Substring(0, filePath.Length - 4) + ".xml";
-            XmlReader reader = XmlReader.Create(xmlPath, settings);
+            XmlReader reader = XmlReader.Create(TitleContainer.OpenStream(@xmlPath), settings);
             while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element)

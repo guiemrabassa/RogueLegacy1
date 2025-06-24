@@ -15,7 +15,7 @@ namespace RogueCastle
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.ConformanceLevel = ConformanceLevel.Fragment;
-            XmlWriter writer = XmlWriter.Create(System.IO.Path.Combine(filePath, "EnemyList.xml"), settings);
+            XmlWriter writer = XmlWriter.Create(TitleContainer.OpenStream(@filePath + "EnemyList.xml"), settings);
 
             string xmlStringtest = "<xml>";
             writer.WriteStartElement("xml");
