@@ -81,20 +81,15 @@ namespace InputSystem
             content.Unload();
         }
 
-        // In your main Game class (e.g., Game1.cs or where your TouchGamepad is)
-
         void SetupButtons()
         {
             var viewport = GraphicsDevice.Viewport;
             int screenWidth = viewport.Width;
             int screenHeight = viewport.Height;
 
-            // Base size definitions. Let's make them a bit smaller.
-            int buttonSize = (int)(screenHeight * 0.16f); // 16% of screen height
-            int spacing = (int)(screenHeight * 0.02f);    // 2% of screen height
+            int buttonSize = (int)(screenHeight * 0.16f);
+            int spacing = (int)(screenHeight * 0.02f);
 
-            // --- D-Pad (Bottom-Left) ---
-            // Anchor the D-pad cluster to the bottom-left corner.
             int dpadX = (int)(screenWidth * 0.15f);
             int dpadY = (int)(screenHeight * 0.80f);
 
@@ -103,17 +98,14 @@ namespace InputSystem
             AddButton(Buttons.DPadLeft, dpadX - buttonSize - spacing, dpadY, buttonSize, buttonSize, "<");
             AddButton(Buttons.DPadRight, dpadX + buttonSize + spacing, dpadY, buttonSize, buttonSize, ">");
 
-            // --- Action Buttons (Bottom-Right) ---
-            // Anchor the action button cluster to the bottom-right corner.
             int actionX = (int)(screenWidth * 0.85f);
             int actionY = (int)(screenHeight * 0.80f);
 
-            AddButton(Buttons.Y, actionX, actionY - buttonSize - spacing, buttonSize, buttonSize, "Y"); // Top
-            AddButton(Buttons.X, actionX - buttonSize - spacing, actionY, buttonSize, buttonSize, "X"); // Left
-            AddButton(Buttons.A, actionX, actionY, buttonSize, buttonSize, "A");                         // Bottom
-            AddButton(Buttons.B, actionX + buttonSize + spacing, actionY, buttonSize, buttonSize, "B"); // Right
+            AddButton(Buttons.Y, actionX, actionY - buttonSize - spacing, buttonSize, buttonSize, "Y");
+            AddButton(Buttons.X, actionX - buttonSize - spacing, actionY, buttonSize, buttonSize, "X");
+            AddButton(Buttons.A, actionX, actionY, buttonSize, buttonSize, "A");
+            AddButton(Buttons.B, actionX + buttonSize + spacing, actionY, buttonSize, buttonSize, "B");
 
-            // --- Menu Buttons (Top-Center) ---
             int menuButtonWidth = (int)(screenWidth * 0.18f);
             int menuButtonHeight = (int)(screenHeight * 0.1f);
             int menuButtonY = (int)(screenHeight * 0.02f);
@@ -148,13 +140,10 @@ namespace InputSystem
 
         public Vector2 TransformTouchPosition(Vector2 touchPosition)
         {
-            // Create a transformation matrix to scale touch input
-
             var screenScaleX = (float)GraphicsDevice.Viewport.Width / this.Game.Window.ClientBounds.Width;
             var screenScaleY = (float)GraphicsDevice.Viewport.Height / this.Game.Window.ClientBounds.Height;
             globalTransformation = Matrix.CreateScale(screenScaleX, screenScaleY, 1.0f);
-
-            // Apply the transformation
+            
             return Vector2.Transform(touchPosition, Matrix.Invert(globalTransformation));
         }
 
