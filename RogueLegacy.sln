@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweener", "Tweener\Tweener.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputSystem", "InputSystem\InputSystem.csproj", "{4EFA1C2F-A065-4520-A8AC-A71EA1751C54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RogueCastle.DesktopGL", "RogueCastle.DesktopGL\RogueCastle.DesktopGL.csproj", "{9E395F36-263F-4CCD-BB50-59A968E83E62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RogueCastle.Android", "RogueCastle.Android\RogueCastle.Android.csproj", "{5648A56A-1D42-4FD6-803F-6B60AC74A756}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
