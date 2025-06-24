@@ -2095,8 +2095,8 @@ namespace RogueCastle
 
             //////// DRAWING FOREGROUND///////////
             Camera.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, RasterizerState.CullNone, Game.BWMaskEffect, Camera.GetTransformation());
-            Game.BWMaskEffect.Parameters["FgTexture"].SetValue(m_fgRenderTarget);
-            Game.BWMaskEffect.Parameters["MaskTexture"].SetValue(CurrentRoom.BGRender);
+            Game.BWMaskEffect.Parameters["TextureSampler"].SetValue(m_fgRenderTarget);
+            Game.BWMaskEffect.Parameters["LightSampler"].SetValue(CurrentRoom.BGRender);
             Camera.Draw(CurrentRoom.BGRender, Camera.TopLeftCorner, Color.White);
             Camera.End();
             ///////////////////////////////////////////
