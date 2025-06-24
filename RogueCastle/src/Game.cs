@@ -1323,9 +1323,9 @@ namespace RogueCastle
         {
             Console.WriteLine("Saving Config file");
 
-            if (!Directory.Exists(Program.OSDir))
-                Directory.CreateDirectory(Program.OSDir);
-            string configFilePath = Path.Combine(Program.OSDir, "GameConfig.ini");
+            if (!Directory.Exists(Platform.OSDir))
+                Directory.CreateDirectory(Platform.OSDir);
+            string configFilePath = Path.Combine(Platform.OSDir, "GameConfig.ini");            
 
             using (StreamWriter writer = new StreamWriter(configFilePath, false))
             {
@@ -1398,7 +1398,7 @@ namespace RogueCastle
             InitializeDefaultConfig(); // Initialize a default config first in case new config data is added in the future.
             try
             {
-                string configFilePath = Path.Combine(Program.OSDir, "GameConfig.ini");
+                string configFilePath = Path.Combine(Platform.OSDir, "GameConfig.ini");
 
                 using (StreamReader reader = new StreamReader(configFilePath))
                 {
