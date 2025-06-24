@@ -15,6 +15,7 @@ using DS2DEngine;
 using System.IO;
 using System.Globalization;
 using System.Threading;
+using MonoGame.Framework.Utilities;
 
 namespace RogueCastle
 {
@@ -231,6 +232,16 @@ namespace RogueCastle
                 FrameRateCounter fpsCounter = new FrameRateCounter(this);
                 Components.Add(fpsCounter);
                 fpsCounter.Initialize();
+            }
+            
+            InputManager.TouchGamepad = new TouchGamepad(this);
+            Components.Add(InputManager.TouchGamepad);
+            InputManager.TouchGamepad.Initialize();
+            
+            if (!Platform.IsMobile)
+            {
+                InputManager.TouchGamepad.Enabled = false;
+                InputManager.TouchGamepad.Visible = false;
             }
 
             // Code used to handle game chop.
