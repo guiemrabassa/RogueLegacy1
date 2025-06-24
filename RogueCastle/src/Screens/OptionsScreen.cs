@@ -9,6 +9,7 @@ using System.IO;
 using System.Globalization;
 using Microsoft.Xna.Framework.Input;
 using InputSystem;
+using MonoGame.Framework.Utilities;
 
 namespace RogueCastle
 {
@@ -65,7 +66,7 @@ namespace RogueCastle
             m_bgSprite.AddChild(m_changeControlsTitle);
             m_changeControlsTitle.Position = new Vector2(1320, m_optionsTitle.Y);
 
-            if (!(Environment.GetEnvironmentVariable("SteamTenfoot") == "1" || Environment.GetEnvironmentVariable("SteamDeck") == "1"))
+            if (!(Environment.GetEnvironmentVariable("SteamTenfoot") == "1" || Environment.GetEnvironmentVariable("SteamDeck") == "1" || Platform.IsMobile))
             {
                 m_optionsArray.Add(new ResolutionOptionsObj(this));
                 m_optionsArray.Add(new FullScreenOptionsObj(this));
@@ -92,7 +93,11 @@ namespace RogueCastle
 
             m_optionsArray.Add(new LanguageOptionsObj(this));
 
-            m_optionsArray.Add(new ExitProgramOptionsObj(this));
+            if (!Platform.IsMobile)
+            {
+                m_optionsArray.Add(new ExitProgramOptionsObj(this));
+            }
+            
             m_backToMenuObj = new BackToMenuOptionsObj(this);
             m_backToMenuObj.X = 420;
 
