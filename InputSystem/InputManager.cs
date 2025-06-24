@@ -43,6 +43,8 @@ namespace InputSystem
 
         public static float Deadzone = 0;
 
+        public static TouchGamepad TouchGamepad;
+
         public InputManager()
         {
         }
@@ -173,7 +175,7 @@ namespace InputSystem
         {
             foreach (Buttons button in Enum.GetValues(typeof(Buttons)))
             {
-                if (CurrentGamePadStates[(int)playerIndex].IsButtonDown(button) == true)
+                if (CurrentGamePadStates[(int)playerIndex].IsButtonDown(button) || TouchGamepad.IsDown(button))
                     return true;
             }
             return false;
@@ -250,7 +252,7 @@ namespace InputSystem
         public static bool Pressed(Buttons button, PlayerIndex playerIndex)
         {
             // All this extra code is to support deadzones.
-            bool isButtonDown = CurrentGamePadStates[(int)playerIndex].IsButtonDown(button);
+            bool isButtonDown = CurrentGamePadStates[(int)playerIndex].IsButtonDown(button) || TouchGamepad.IsDown(button);
             bool isThumbstick = false;
             Vector2 thumbstickAmount = GetThumbstickState(button, playerIndex, out isThumbstick);
             if (isThumbstick == false)
@@ -266,7 +268,7 @@ namespace InputSystem
         public static bool PreviousStatePressed(Buttons button, PlayerIndex playerIndex)
         {
             // All this extra code is to support deadzones.
-            bool isButtonDown = PreviousGamePadStates[(int)playerIndex].IsButtonDown(button);
+            bool isButtonDown = PreviousGamePadStates[(int)playerIndex].IsButtonDown(button) || TouchGamepad.WasDown(button);
             bool isThumbstick = false;
             Vector2 thumbstickAmount = GetPreviousThumbstickState(button, playerIndex, out isThumbstick);
             if (isThumbstick == false)

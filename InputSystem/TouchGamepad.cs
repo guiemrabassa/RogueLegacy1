@@ -1,35 +1,130 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
 namespace InputSystem
 {
-    public class TouchGamepad
+    public class TouchGamepad : DrawableGameComponent
     {
-        class TouchButton
+
+        public class TouchButton
         {
-            internal Rectangle Bounds;
+            public Rectangle Bounds;
             internal ButtonState PreviousState;
             internal ButtonState State;
             internal string Text;
+
+            public virtual void Draw(SpriteBatch spriteBatch, Texture2D pixel, SpriteFont spriteFont)
+            {
+                Color drawColor = Color.White;
+                if (State == ButtonState.Pressed)
+                    drawColor = Color.Red;
+
+                spriteBatch.Draw(pixel, Bounds, drawColor * opacity);
+
+                
+                
+
+                spriteBatch.DrawString(
+                    spriteFont,
+                    Text,
+                    new Vector2(
+                        Bounds.Left,
+                        Bounds.Top
+                    ),
+                    Color.Yellow,
+                    0,
+                    Vector2.Zero,
+                    4,
+                    SpriteEffects.None,
+                    0
+                );
+            }
         }
 
-         Dictionary<Buttons, TouchButton> buttons = new Dictionary<Buttons, TouchButton>();
-         Texture2D pixel;
-         const float opacity = 0.3f;
+        public SpriteBatch spriteBatch;
+        public SpriteFont spriteFont;
+
+        ContentManager content;
+
+        public Dictionary<Buttons, TouchButton> buttons = new Dictionary<Buttons, TouchButton>();
+        public Texture2D pixel;
+
+        Matrix globalTransformation;
+        const float opacity = 0.3f;
+
+        public TouchGamepad(Game game)
+            : base(game)
+        {
+            this.content = Game.Content;
+        }
 
         #region Life Cycle
 
-        public void Initialize(GraphicsDevice graphicsDevice)
+        protected override void LoadContent()
         {
-            pixel = new Texture2D(graphicsDevice, 1, 1);
+            pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
+            spriteBatch = new SpriteBatch(GraphicsDevice);            
+
+            spriteFont = content.Load<SpriteFont>("Fonts\\Junicode");
+
+            SetupButtons();
         }
 
-        public void Update()
+        protected override void UnloadContent()
+        {
+            content.Unload();
+        }
+
+        // In your main Game class (e.g., Game1.cs or where your TouchGamepad is)
+
+        void SetupButtons()
+        {
+            var viewport = GraphicsDevice.Viewport;
+            int screenWidth = viewport.Width;
+            int screenHeight = viewport.Height;
+
+            // Base size definitions. Let's make them a bit smaller.
+            int buttonSize = (int)(screenHeight * 0.16f); // 16% of screen height
+            int spacing = (int)(screenHeight * 0.02f);    // 2% of screen height
+
+            // --- D-Pad (Bottom-Left) ---
+            // Anchor the D-pad cluster to the bottom-left corner.
+            int dpadX = (int)(screenWidth * 0.15f);
+            int dpadY = (int)(screenHeight * 0.80f);
+
+            AddButton(Buttons.DPadUp, dpadX, dpadY - buttonSize - spacing, buttonSize, buttonSize, "^");
+            AddButton(Buttons.DPadDown, dpadX, dpadY, buttonSize, buttonSize, "v");
+            AddButton(Buttons.DPadLeft, dpadX - buttonSize - spacing, dpadY, buttonSize, buttonSize, "<");
+            AddButton(Buttons.DPadRight, dpadX + buttonSize + spacing, dpadY, buttonSize, buttonSize, ">");
+
+            // --- Action Buttons (Bottom-Right) ---
+            // Anchor the action button cluster to the bottom-right corner.
+            int actionX = (int)(screenWidth * 0.85f);
+            int actionY = (int)(screenHeight * 0.80f);
+
+            AddButton(Buttons.Y, actionX, actionY - buttonSize - spacing, buttonSize, buttonSize, "Y"); // Top
+            AddButton(Buttons.X, actionX - buttonSize - spacing, actionY, buttonSize, buttonSize, "X"); // Left
+            AddButton(Buttons.A, actionX, actionY, buttonSize, buttonSize, "A");                         // Bottom
+            AddButton(Buttons.B, actionX + buttonSize + spacing, actionY, buttonSize, buttonSize, "B"); // Right
+
+            // --- Menu Buttons (Top-Center) ---
+            int menuButtonWidth = (int)(screenWidth * 0.18f);
+            int menuButtonHeight = (int)(screenHeight * 0.1f);
+            int menuButtonY = (int)(screenHeight * 0.02f);
+            int menuSpacing = (int)(screenWidth * 0.02f);
+            int menuStartX = (screenWidth / 2) - (menuButtonWidth + menuSpacing / 2);
+
+            AddButton(Buttons.Back, menuStartX, menuButtonY, menuButtonWidth, menuButtonHeight, "Back");
+            AddButton(Buttons.Start, menuStartX + menuButtonWidth + menuSpacing, menuButtonY, menuButtonWidth, menuButtonHeight, "Start");
+        }
+
+        public override void Update(GameTime gameTime)
         {
             TouchCollection touches = TouchPanel.GetState();
 
@@ -40,7 +135,9 @@ namespace InputSystem
 
                 foreach (TouchLocation touch in touches)
                 {
-                    if (button.Bounds.Contains((int)touch.Position.X, (int)touch.Position.Y))
+                    Vector2 transformedPosition = TransformTouchPosition(touch.Position);
+
+                    if (button.Bounds.Contains(transformedPosition))
                     {
                         button.State = ButtonState.Pressed;
                         break;
@@ -49,31 +146,28 @@ namespace InputSystem
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, SpriteFont font)
+        public Vector2 TransformTouchPosition(Vector2 touchPosition)
         {
+            // Create a transformation matrix to scale touch input
+
+            var screenScaleX = (float)GraphicsDevice.Viewport.Width / this.Game.Window.ClientBounds.Width;
+            var screenScaleY = (float)GraphicsDevice.Viewport.Height / this.Game.Window.ClientBounds.Height;
+            globalTransformation = Matrix.CreateScale(screenScaleX, screenScaleY, 1.0f);
+
+            // Apply the transformation
+            return Vector2.Transform(touchPosition, Matrix.Invert(globalTransformation));
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            spriteBatch.Begin();
+
             foreach (TouchButton button in buttons.Values)
             {
-                Color drawColor = Color.White;
-                if (button.State == ButtonState.Pressed)
-                    drawColor = Color.Red;
-
-                spriteBatch.Draw(pixel, button.Bounds, drawColor * opacity);
-
-                spriteBatch.DrawString(
-                    font,
-                    button.Text,
-                    new Vector2(
-                        button.Bounds.X + (button.Bounds.Width / 2) - 16,
-                        button.Bounds.Y + (button.Bounds.Height / 2) - 16
-                    ),
-                    Color.Yellow,
-                    0,
-                    Vector2.Zero,
-                    4,
-                    SpriteEffects.None,
-                    0
-                );
+                button.Draw(spriteBatch, pixel, spriteFont);
             }
+
+            spriteBatch.End();
         }
 
         #endregion
