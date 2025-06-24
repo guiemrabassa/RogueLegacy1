@@ -34,7 +34,7 @@ technique Technique1
 {
     pass Pass1
     {
-       PixelShader = compile ps_2_0 PixelShaderFunction();
+       PixelShader = compile ps_3_0 PixelShaderFunction();
     }
 }
 
@@ -53,7 +53,7 @@ technique BloomExtract
 {
     pass P0
     {
-        PixelShader = compile ps_2_0 BrightPassPS();
+        PixelShader = compile ps_3_0 BrightPassPS();
     }
 }
 
@@ -87,13 +87,13 @@ technique Blend
 {
     pass p0
     {
-        PixelShader = compile ps_2_0 BlendPS();
+        PixelShader = compile ps_3_0 BlendPS();
     }
 }
 technique Aditive
 {
     pass p0
     {
-        PixelShader = compile ps_2_0 AditivePS();
+        PixelShader = compile ps_3_0 AditivePS();
     }
 }

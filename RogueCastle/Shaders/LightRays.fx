@@ -54,6 +54,6 @@ technique LightRayFX
 	pass p0
 	{
 		//VertexShader = compile vs_2_0 VertexShaderFunction();
-		PixelShader = compile ps_2_0 lightRayPS();
+		PixelShader = compile ps_3_0 lightRayPS();
 	}
 }
