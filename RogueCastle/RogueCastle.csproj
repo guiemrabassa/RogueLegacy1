@@ -11,6 +11,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Content\bin\**" />
+    <Compile Remove="Content\obj\**" />
+    <EmbeddedResource Remove="Content\bin\**" />
+    <EmbeddedResource Remove="Content\obj\**" />
+    <None Remove="Content\bin\**" />
+    <None Remove="Content\obj\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Content\RogueCastle.mgcb" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DS2DEngine\DS2DEngine.csproj">
       <Project>{050AF89B-5F49-455E-93C1-BFE7FF9506D2}</Project>
       <Name>DS2DEngine</Name>
@@ -26,10 +44,6 @@
     <ProjectReference Include="..\Tweener\Tweener.csproj">
       <Project>{D9583122-AC6D-41EB-8292-04BDD0519D7C}</Project>
       <Name>Tweener</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FNA\FNA.NetFramework.csproj">
-      <Project>{35253CE1-C864-4CD3-8249-4D1319748E8F}</Project>
-      <Name>FNA</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
